@@ -78,11 +78,13 @@ def parse_congress_meeting(source: Source, m: dict, today_iso: str) -> Event | N
     # (that 404s); the real shape is /event/<c>th-Congress/<chamber>-event/<id>.
     # Prefer the API's own congress.gov video URL when present, else build it.
     url = f"https://www.congress.gov/event/{m.get('congress')}th-Congress/{chamber}-event/{eid}"
+    stream = ""
     for v in (m.get("videos") or []):
         vu = (v.get("url") or "") if isinstance(v, dict) else ""
         if "congress.gov/event/" in vu:
-            url = vu
-            break
+            url = vu                 # canonical event page -> source_url
+        elif vu and "congress.gov" not in vu and not stream:
+            stream = vu              # direct senate.gov/house.gov webcast -> watch_url
     ev = Event(
         id=f"congress-{eid}",
         title=title,
@@ -100,7 +102,7 @@ def parse_congress_meeting(source: Source, m: dict, today_iso: str) -> Event | N
     # business-meetings/markups (relabeled above; not uniformly webcast).
     if not re.search(r"business meeting|markup", m_type, re.I):
         ev.raw["remote"] = True
-        ev.raw["watch_url"] = url
+        ev.raw["watch_url"] = stream or url   # direct stream when present, else event page
     return ev
 
 

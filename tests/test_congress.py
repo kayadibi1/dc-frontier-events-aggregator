@@ -87,3 +87,15 @@ def test_markup_not_remote():
     ev = parse_congress_meeting(SRC, m, "2026-06-02")
     assert ev is not None                                 # kept (genuine AI bill)
     assert not ev.raw.get("remote")                       # but markups are not flagged
+
+
+def test_hearing_watch_url_is_direct_stream_when_present():
+    from aggregator.remote import safe_watch_url
+    m = dict(_load(0))
+    m["videos"] = [
+        {"url": "https://www.congress.gov/event/119th-Congress/house-event/119338"},
+        {"url": "https://www.senate.gov/isvp/?comm=help&filename=help061626"},
+    ]
+    ev = parse_congress_meeting(SRC, m, "2026-06-02")
+    assert ev.source_url == "https://www.congress.gov/event/119th-Congress/house-event/119338"
+    assert safe_watch_url(ev) == "https://www.senate.gov/isvp/?comm=help&filename=help061626"
