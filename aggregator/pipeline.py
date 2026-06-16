@@ -118,8 +118,8 @@ def run(out_dir: str = "out", db_path: str = "data/events.db",
                       cal_name="DC AI & Frontier Tech Events")
     rss_n = write_rss(emitted, f"{out_dir}/feed.xml")
     write_ics(big, f"{out_dir}/events-big-names.ics", today,
-              cal_name="DC AI / Big Names")
-    write_rss(big, f"{out_dir}/feed-big-names.xml", "DC AI & Frontier Tech -- Big Names")
+              cal_name="DC AI / Marquee")
+    write_rss(big, f"{out_dir}/feed-big-names.xml", "DC AI & Frontier Tech -- Marquee")
     up_n = write_ics(upcoming, f"{out_dir}/events-upcoming.ics", today,
                      cal_name="DC AI & Frontier Tech / Upcoming")
     write_rss(upcoming, f"{out_dir}/feed-upcoming.xml", "DC AI & Frontier Tech -- Upcoming")

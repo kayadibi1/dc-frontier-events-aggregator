@@ -173,7 +173,7 @@ def write_rss(events: list[Event], path: str,
     items = []
     for ev in events:
         topics = ", ".join(ev.topics)
-        big = "★ BIG NAME -- " if ev.is_big_name else ""
+        big = "★ MARQUEE -- " if ev.is_big_name else ""
         body = "\n".join(p for p in [ev.address, ev.description,
                                      f"Topics: {topics}" if topics else ""] if p)
         items.append(
@@ -298,7 +298,7 @@ box-shadow:0 2px 14px rgba(0,0,0,.6)}
 <label><input type="checkbox" class="flt-layer" value="2" checked><span class="lg" style="background:#bf5af2"></span>L2</label>
 <label><input type="checkbox" class="flt-layer" value="3" checked><span class="lg" style="background:#30d158"></span>L3</label>
 </div><div>
-<label><input type="checkbox" id="flt-big"><span class="lg" style="background:#ff453a"></span>Big names</label>
+<label><input type="checkbox" id="flt-big"><span class="lg" style="background:#ff453a"></span>Marquee</label>
 </div><div id="count"></div></div>
 <ul id="list">
 """

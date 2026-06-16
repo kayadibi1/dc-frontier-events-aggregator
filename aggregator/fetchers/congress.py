@@ -74,7 +74,15 @@ def parse_congress_meeting(source: Source, m: dict, today_iso: str) -> Event | N
         if nm:
             speakers.append(nm)
     chamber = (m.get("chamber") or "house").lower()
-    url = f"https://www.congress.gov/committee-meeting/{m.get('congress')}/{chamber}/{eid}"
+    # congress.gov's canonical event page. NOT /committee-meeting/<c>/<chamber>/<id>
+    # (that 404s); the real shape is /event/<c>th-Congress/<chamber>-event/<id>.
+    # Prefer the API's own congress.gov video URL when present, else build it.
+    url = f"https://www.congress.gov/event/{m.get('congress')}th-Congress/{chamber}-event/{eid}"
+    for v in (m.get("videos") or []):
+        vu = (v.get("url") or "") if isinstance(v, dict) else ""
+        if "congress.gov/event/" in vu:
+            url = vu
+            break
     ev = Event(
         id=f"congress-{eid}",
         title=title,

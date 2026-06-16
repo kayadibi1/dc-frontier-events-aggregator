@@ -23,7 +23,7 @@ def test_parses_ai_hearing():
     assert "ai" in ev.topics
     assert "Washington, DC" in ev.address and "Rayburn" in ev.address
     assert ev.source == "congress"
-    assert ev.source_url.startswith("https://www.congress.gov/")
+    assert ev.source_url == "https://www.congress.gov/event/119th-Congress/house-event/119338"
     assert ev.speakers                                  # witnesses captured as speakers
 
 
