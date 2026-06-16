@@ -90,6 +90,10 @@ def _absorb_fields(canonical: Event, other: Event) -> None:
     for t in o.topics:
         if t not in c.topics:
             c.topics.append(t)
+    if o.raw.get("remote"):
+        c.raw["remote"] = True
+    if not c.raw.get("watch_url") and o.raw.get("watch_url"):
+        c.raw["watch_url"] = o.raw["watch_url"]
 
 
 def _merge(canonical: Event, other: Event) -> None:
@@ -144,6 +148,10 @@ def _fold_run(run: list[Event]) -> Event:
         base.raw["days"] = [(e.start or "")[:10] for e in run]
         for e in run[1:]:
             _merge_source(base, e)
+            if e.raw.get("remote"):
+                base.raw["remote"] = True
+            if not base.raw.get("watch_url") and e.raw.get("watch_url"):
+                base.raw["watch_url"] = e.raw["watch_url"]
     return base
 
 

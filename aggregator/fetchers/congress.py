@@ -75,7 +75,7 @@ def parse_congress_meeting(source: Source, m: dict, today_iso: str) -> Event | N
             speakers.append(nm)
     chamber = (m.get("chamber") or "house").lower()
     url = f"https://www.congress.gov/committee-meeting/{m.get('congress')}/{chamber}/{eid}"
-    return Event(
+    ev = Event(
         id=f"congress-{eid}",
         title=title,
         start=date,
@@ -87,6 +87,13 @@ def parse_congress_meeting(source: Source, m: dict, today_iso: str) -> Event | N
         speakers=speakers,
         topics=topics,
     )
+    # Congressional hearings are publicly webcast; the congress.gov meeting page
+    # hosts the official video. Institutional fact, not a per-event scrape. Exclude
+    # business-meetings/markups (relabeled above; not uniformly webcast).
+    if not re.search(r"business meeting|markup", m_type, re.I):
+        ev.raw["remote"] = True
+        ev.raw["watch_url"] = url
+    return ev
 
 
 async def fetch_congress(source: Source) -> SourceResult:

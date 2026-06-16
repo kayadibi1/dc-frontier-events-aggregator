@@ -34,3 +34,26 @@ def test_absorb_never_overwrites_existing_canonical_fields():
     out, _ = dedupe([a, b])
     assert out[0].address == "100 First St NW"            # canonical address preserved
     assert out[0].description == "Canonical blurb is rich."
+
+
+def test_absorb_merges_remote_and_watch_url():
+    from aggregator.dedupe import _absorb_fields
+    from aggregator.models import Event
+    a = Event(id="a", title="AI Forum", start="2026-07-01", source="csis")
+    b = Event(id="b", title="AI Forum", start="2026-07-01", source="brookings",
+              raw={"remote": True, "watch_url": "https://zoom.us/j/1"})
+    _absorb_fields(a, b)
+    assert a.raw.get("remote") is True
+    assert a.raw.get("watch_url") == "https://zoom.us/j/1"
+
+
+def test_absorb_keeps_existing_watch_url():
+    from aggregator.dedupe import _absorb_fields
+    from aggregator.models import Event
+    a = Event(id="a", title="t", start="2026-07-01", source="csis",
+              raw={"watch_url": "https://a.example/keep"})
+    b = Event(id="b", title="t", start="2026-07-01", source="x",
+              raw={"remote": True, "watch_url": "https://b.example/other"})
+    _absorb_fields(a, b)
+    assert a.raw.get("watch_url") == "https://a.example/keep"
+    assert a.raw.get("remote") is True

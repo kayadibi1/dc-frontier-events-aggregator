@@ -68,3 +68,25 @@ def test_map_handles_empty(tmp_path):
     tree = HTMLParser(p.read_text(encoding="utf-8"))
     assert tree.css_first("#map") is not None
     assert len(tree.css("#list li.ev")) == 0
+
+
+def test_json_export_includes_remote_and_sanitizes():
+    from aggregator.emit import _event_dicts
+    from aggregator.models import Event
+    ev = Event(id="x", title="t", start="2026-07-01", source="csis",
+               address="100 K St, Washington, DC",
+               raw={"remote": True, "watch_url": "https://zoom.us/j/1"})
+    d = _event_dicts([ev])[0]
+    assert d["remote"] is True
+    assert d["watch_url"] == "https://zoom.us/j/1"
+    assert d["raw"]["watch_url"] == "https://zoom.us/j/1"
+
+
+def test_json_export_sanitizes_malicious_watch_url():
+    from aggregator.emit import _event_dicts
+    from aggregator.models import Event
+    ev = Event(id="x", title="t", start="2026-07-01", source="csis",
+               raw={"remote": True, "watch_url": "javascript:alert(1)"})
+    d = _event_dicts([ev])[0]
+    assert d["watch_url"] == ""
+    assert d["raw"]["watch_url"] == ""

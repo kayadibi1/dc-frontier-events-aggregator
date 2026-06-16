@@ -218,3 +218,25 @@ def test_ics_url_drops_javascript_source_url(tmp_path):
     p = tmp_path / "events.ics"
     write_ics([evil], str(p))
     assert b"javascript:" not in p.read_bytes()
+
+
+def test_ics_description_has_remote_note():
+    from aggregator.emit import build_ics
+    from aggregator.models import Event
+    ev = Event(id="x", title="AI hearing", start="2026-07-01", source="congress",
+               address="Rayburn HOB, Washington, DC",
+               raw={"remote": True, "watch_url": "https://www.congress.gov/m/1"})
+    data, _ = build_ics([ev], "2026-06-01")
+    text = data.decode("utf-8").replace("\r\n ", "")     # unfold 75-octet ICS lines
+    assert "Remote viewing available" in text
+    assert "congress.gov/m/1" in text
+
+
+def test_ics_no_remote_note_for_inperson():
+    from aggregator.emit import build_ics
+    from aggregator.models import Event
+    ev = Event(id="y", title="In person", start="2026-07-01", source="csis",
+               address="100 K St, Washington, DC")
+    data, _ = build_ics([ev], "2026-06-01")
+    text = data.decode("utf-8").replace("\r\n ", "")
+    assert "Remote viewing available" not in text

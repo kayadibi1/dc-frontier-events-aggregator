@@ -70,3 +70,20 @@ def test_business_meeting_with_ai_kept_and_titled_cleanly():
     assert ev.title == "Senate Commerce, Science, and Transportation: business meeting"
     assert "S.1" not in ev.title and "Amazon" not in ev.title
     assert len(ev.title) < 80
+
+
+def test_hearing_is_remote_with_meeting_page():
+    from aggregator.remote import is_remote, safe_watch_url
+    ev = parse_congress_meeting(SRC, _load(0), "2026-06-02")
+    assert is_remote(ev) is True                          # hearings are webcast
+    assert safe_watch_url(ev) == ev.source_url            # the congress.gov page
+    assert ev.source_url.startswith("https://www.congress.gov/")
+
+
+def test_markup_not_remote():
+    m = dict(_load(2))
+    m["title"] = ("Business meeting to consider S.1, the Artificial Intelligence "
+                  "Research Act.")
+    ev = parse_congress_meeting(SRC, m, "2026-06-02")
+    assert ev is not None                                 # kept (genuine AI bill)
+    assert not ev.raw.get("remote")                       # but markups are not flagged

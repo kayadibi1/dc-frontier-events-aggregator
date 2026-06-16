@@ -191,3 +191,25 @@ def test_canceled_detail_is_not_emitted():
         "Wilson Center")
     assert ev is None
 
+
+
+def test_event_from_detail_sets_remote_from_livestream_link():
+    from aggregator.remote import is_remote, safe_watch_url
+    html = """
+    <html><body>
+      <main class="p-event-detail">
+        <div>25 June 2026</div>
+        <div>In-Person Event</div>
+        <h1>Securing America's AI Advantage</h1>
+        <div>THURSDAY 8:30 a.m. - 9:30 a.m.</div>
+        <p>Join a fireside chat on AI and export controls.</p>
+        <p>Watch live <a href="https://zoom.us/j/77">online</a></p>
+      </main>
+    </body></html>
+    """
+    ev = _event_from_detail(
+        _src("hudson"), DetailSeed("https://www.hudson.org/events/ai-advantage"), html,
+        "Hudson Institute")
+    assert ev is not None
+    assert is_remote(ev) is True
+    assert safe_watch_url(ev) == "https://zoom.us/j/77"

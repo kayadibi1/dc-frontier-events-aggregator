@@ -19,6 +19,7 @@ from icalendar import Event as IcsEvent
 from .config import SOURCES
 from .models import Event
 from .provenance import marker, notes
+from .remote import is_remote, safe_watch_url
 
 PRODID = "-//dc-frontier-events//EN"
 _LAYER = {s.slug: s.layer for s in SOURCES}
@@ -124,6 +125,9 @@ def build_ics(events: list[Event], today_iso: str | None = None,
         prov_notes = notes(ev)
         if prov_notes:
             desc = f"{desc}\n\nNotes: {'; '.join(prov_notes)}".strip()
+        if is_remote(ev):
+            w = safe_watch_url(ev)
+            desc = f"{desc}\n\nRemote viewing available{': ' + w if w else ''}".strip()
         ie.add("description", desc)
         # A 1-day-before reminder, only for upcoming events.
         if today_iso and (ev.start or "")[:10] >= today_iso:
@@ -202,6 +206,12 @@ def _event_dicts(events: list[Event]) -> list[dict]:
         d = asdict(ev)
         d["layer"] = _LAYER.get(ev.source, 0)
         d["score"] = ev.raw.get("score")
+        d["remote"] = is_remote(ev)
+        d["watch_url"] = safe_watch_url(ev)
+        # asdict() copied the whole raw -- overwrite the raw copy's watch_url with
+        # the sanitized value so no scraped javascript:/data: URL leaks via raw.
+        if isinstance(d.get("raw"), dict) and "watch_url" in d["raw"]:
+            d["raw"]["watch_url"] = safe_watch_url(ev)
         out.append(d)
     return out
 

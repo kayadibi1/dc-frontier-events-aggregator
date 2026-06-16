@@ -25,6 +25,7 @@ import httpx
 from selectolax.parser import HTMLParser
 
 from ..config import SOURCE_HQ, Source
+from ..remote import detect_remote
 from ..models import Event
 from ..normalize import detect_topics
 from ..provenance import prov_set
@@ -423,6 +424,11 @@ def _event_from_detail(source: Source, seed: DetailSeed, html: str,
         prov_set(ev, "location", prov)
     if "T" in start:
         prov_set(ev, "time", "structured" if structured.get("start") else "extracted")
+    found, w = detect_remote(html, seed.url)
+    if found:
+        ev.raw["remote"] = True
+        if w and not ev.raw.get("watch_url"):
+            ev.raw["watch_url"] = w
     return ev
 
 

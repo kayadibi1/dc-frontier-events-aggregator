@@ -26,6 +26,7 @@ from .fetchers.waf import curl_get
 from .models import Event
 from .normalize import detect_topics
 from .provenance import prov_clear, prov_set
+from .remote import detect_remote
 from .structured import extract_structured
 
 # A person name: 2-4 capitalized words (allowing internal hyphen/period/').
@@ -335,7 +336,16 @@ async def enrich_layer2(events: list[Event], layer_by_source: dict[str, int],
             added_loc = bool(ev.address)
 
         _reconcile_time(ev, st)
-        return 1 if (ev.speakers or added_desc or added_loc) else 0
+
+        added_remote = False
+        found, w = detect_remote(html or "", ev.source_url)
+        if found:
+            if not ev.raw.get("remote"):
+                ev.raw["remote"] = True
+                added_remote = True
+            if w and not ev.raw.get("watch_url"):
+                ev.raw["watch_url"] = w
+        return 1 if (ev.speakers or added_desc or added_loc or added_remote) else 0
 
     results = await asyncio.gather(*[one(e) for e in targets])
     return sum(results)

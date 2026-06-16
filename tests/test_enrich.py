@@ -355,3 +355,28 @@ def test_waf_fetch_returns_body_on_200(monkeypatch):
     monkeypatch.setattr(enrich, "curl_get", lambda url, proxy=None: (200, "<html>real</html>"))
     html = asyncio.run(enrich.default_fetch("https://cdt.org/event/x/", "cdt"))
     assert html == "<html>real</html>"
+
+
+def test_enrich_sets_remote_from_livestream_link():
+    ev = Event(id="csis-1", title="AI panel", start="2026-07-01", source="csis",
+               source_url="https://csis.org/event/1")
+    html = '<main><p>Watch live <a href="https://zoom.us/j/55">here</a></p></main>'
+
+    async def fake_fetch(url, kind):
+        return html
+
+    n = asyncio.run(enrich_layer2([ev], {"csis": 2}, fake_fetch))
+    assert ev.raw.get("remote") is True
+    assert ev.raw.get("watch_url") == "https://zoom.us/j/55"
+    assert n >= 1                                    # remote-only enrichment still counts
+
+
+def test_enrich_no_remote_on_plain_page():
+    ev = Event(id="csis-2", title="AI talk", start="2026-07-01", source="csis",
+               source_url="https://csis.org/event/2")
+
+    async def fake_fetch(url, kind):
+        return '<main><p>An in-person talk at 1616 Rhode Island Ave.</p></main>'
+
+    asyncio.run(enrich_layer2([ev], {"csis": 2}, fake_fetch))
+    assert not ev.raw.get("remote")
