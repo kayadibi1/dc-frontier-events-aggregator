@@ -1,0 +1,9 @@
+httpx>=0.27
+icalendar>=5.0
+feedparser>=6.0
+selectolax>=0.3
+curl_cffi>=0.7
+playwright>=1.40   # headless Chromium for JS-rendered event pages (jsrender adapter)
+# psycopg2-binary>=2.9  # optional: enables the Postgres backend (set DATABASE_URL)
+# sentence-transformers>=2.2  # optional: enables cross-language semantic dedupe (dedupe pass 4)
+# pytest — dev/test only.

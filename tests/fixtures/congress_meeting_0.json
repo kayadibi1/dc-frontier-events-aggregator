@@ -1,0 +1,94 @@
+{
+ "chamber": "House",
+ "committees": [
+  {
+   "name": "House Education and Workforce Subcommittee on Higher Education and Workforce Development",
+   "systemCode": "hsed13",
+   "url": "https://api.congress.gov/v3/committee/house/hsed13?format=json"
+  }
+ ],
+ "congress": 119,
+ "date": "2026-06-03T14:15:00Z",
+ "eventId": "119338",
+ "location": {
+  "building": "Rayburn House Office Building",
+  "room": "2175"
+ },
+ "meetingDocuments": [
+  {
+   "description": "Hearing Notice",
+   "documentType": "Support Document",
+   "format": "PDF",
+   "name": "Hearing Notice",
+   "url": "https://www.congress.gov/119/meeting/house/119338/documents/HHRG-119-ED13-20260603-SD001.pdf"
+  }
+ ],
+ "meetingStatus": "Scheduled",
+ "title": "\"Building an AI-Ready America: Higher Education in the Age of AI\"",
+ "type": "Hearing",
+ "updateDate": "2026-06-01T15:33:26Z",
+ "witnessDocuments": [
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-Bio-FozardJ-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-TTF-FozardJ-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-Bio-DukeD-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-TTF-DukeD-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-Bio-BurnsB-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-TTF-BurnsB-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-Bio-HornM-20260603.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119338/witnesses/HHRG-119-ED13-TTF-HornM-20260603.pdf"
+  }
+ ],
+ "witnesses": [
+  {
+   "name": "Mr. Jonathan Fozard",
+   "organization": "Florida State University",
+   "position": "Chief Information Officer"
+  },
+  {
+   "name": "Dr. Dave Duke",
+   "organization": "McGraw Hill",
+   "position": "Chief Product Officer for Higher Education"
+  },
+  {
+   "name": "Dr. Bridget Burns",
+   "organization": "University Innovation Alliance",
+   "position": "CEO"
+  },
+  {
+   "name": "Mr. Michael Horn",
+   "organization": "Harvard Graduate School of Education",
+   "position": "Author & Adjunct Professor"
+  }
+ ]
+}

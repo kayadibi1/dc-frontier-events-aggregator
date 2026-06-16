@@ -1,0 +1,88 @@
+{
+ "chamber": "House",
+ "committees": [
+  {
+   "name": "House Foreign Affairs East Asia and Pacific Subcommittee",
+   "systemCode": "hsfa05",
+   "url": "https://api.congress.gov/v3/committee/house/hsfa05?format=json"
+  }
+ ],
+ "congress": 119,
+ "date": "2026-06-04T18:00:00Z",
+ "eventId": "119344",
+ "location": {
+  "building": "Rayburn House Office Building",
+  "room": "2172"
+ },
+ "meetingDocuments": [
+  {
+   "description": "Hearing Notice",
+   "documentType": "Support Document",
+   "format": "PDF",
+   "name": "Hearing Notice",
+   "url": "https://www.congress.gov/119/meeting/house/119344/documents/HHRG-119-FA05-20260604-SD001.pdf"
+  }
+ ],
+ "meetingStatus": "Scheduled",
+ "title": "Beijing’s Poison Pipeline: The CCP’s Role in the Fentanyl\r\nCrisis",
+ "type": "Hearing",
+ "updateDate": "2026-06-03T01:28:56Z",
+ "witnessDocuments": [
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-Bio-LuckeyD-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Statement",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-Wstate-LuckeyD-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-TTF-LuckeyD-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-Bio-ZoeLiuZ-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Statement",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-Wstate-ZoeLiuZ-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-TTF-ZoeLiuZ-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Biography",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-Bio-YatesS-20260604.pdf"
+  },
+  {
+   "documentType": "Witness Truth in Testimony",
+   "format": "PDF",
+   "url": "https://www.congress.gov/119/meeting/house/119344/witnesses/HHRG-119-FA05-TTF-YatesS-20260604.pdf"
+  }
+ ],
+ "witnesses": [
+  {
+   "name": "Mr. David Luckey",
+   "position": "Director, RAND Rural America Partnership Initiative"
+  },
+  {
+   "name": "The Honorable Steve Yates",
+   "organization": "China and National Security Policy, Heritage Foundation",
+   "position": "Senior Research Fellow"
+  },
+  {
+   "name": "Ms. Zongyuan Zoe Liu",
+   "organization": "Council on Foreign Relations",
+   "position": "Maurice R. Greenberg Senior Fellow for China Studies"
+  }
+ ]
+}

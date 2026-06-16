@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtualenv / secrets
+.venv/
+.env
+
+# Build / run outputs (regenerated; never committed)
+out/
+data/
+site/

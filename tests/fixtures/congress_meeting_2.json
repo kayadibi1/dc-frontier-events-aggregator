@@ -1,0 +1,47 @@
+{
+ "chamber": "Senate",
+ "committees": [
+  {
+   "name": "Senate Commerce, Science, and Transportation",
+   "systemCode": "sscm00",
+   "url": "https://api.congress.gov/v3/committee/senate/sscm00?format=json"
+  }
+ ],
+ "congress": 119,
+ "date": "2026-06-18T14:00:00Z",
+ "eventId": "338574",
+ "location": {
+  "building": "Russell Senate Office Building",
+  "room": "253"
+ },
+ "meetingDocuments": [
+  {
+   "description": "A bill to protect the name, image, and likeness rights of, and provide protections for, student athletes and to promote fair competition among intercollegiate athletics, and for other purposes.",
+   "documentType": "Bills and Resolutions"
+  }
+ ],
+ "meetingStatus": "Scheduled",
+ "relatedItems": {
+  "bills": [
+   {
+    "congress": 119,
+    "number": "4668",
+    "type": "S",
+    "url": "https://api.congress.gov/v3/bill/119/s/4668?format=json"
+   }
+  ]
+ },
+ "title": "Business meeting to consider S.4668, to protect the name, image, and likeness rights of, and provide protections for, student athletes and to promote fair competition among intercollegiate athletics.",
+ "type": "Open Business Meeting",
+ "updateDate": "2026-06-13T02:08:26Z",
+ "videos": [
+  {
+   "name": "Business meeting to consider S.4668, to protect the name, image, and likeness rights of, and provide protections for, student athletes and to promote fair competition among intercollegiate athletics.",
+   "url": "https://www.congress.gov/event/119th-Congress/senate-event/338574"
+  },
+  {
+   "name": "Business meeting to consider S.4668, to protect the name, image, and likeness rights of, and provide protections for, student athletes and to promote fair competition among intercollegiate athletics.",
+   "url": "https://www.senate.gov/isvp/?comm=commerce&filename=commerce061826"
+  }
+ ]
+}
