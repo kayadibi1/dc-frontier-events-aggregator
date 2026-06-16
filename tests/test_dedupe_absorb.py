@@ -57,3 +57,14 @@ def test_absorb_keeps_existing_watch_url():
     _absorb_fields(a, b)
     assert a.raw.get("watch_url") == "https://a.example/keep"
     assert a.raw.get("remote") is True
+
+
+def test_absorb_replaces_invalid_watch_url_with_valid():
+    from aggregator.dedupe import _absorb_fields
+    from aggregator.models import Event
+    a = Event(id="a", title="t", start="2026-07-01", source="csis",
+              raw={"remote": True, "watch_url": "javascript:alert(1)"})
+    b = Event(id="b", title="t", start="2026-07-01", source="x",
+              raw={"remote": True, "watch_url": "https://zoom.us/j/1"})
+    _absorb_fields(a, b)
+    assert a.raw.get("watch_url") == "https://zoom.us/j/1"   # invalid replaced by valid

@@ -92,8 +92,12 @@ def _absorb_fields(canonical: Event, other: Event) -> None:
             c.topics.append(t)
     if o.raw.get("remote"):
         c.raw["remote"] = True
-    if not c.raw.get("watch_url") and o.raw.get("watch_url"):
+    if not _http_url(c.raw.get("watch_url")) and _http_url(o.raw.get("watch_url")):
         c.raw["watch_url"] = o.raw["watch_url"]
+
+
+def _http_url(u) -> bool:
+    return isinstance(u, str) and u.lower().startswith(("http://", "https://"))
 
 
 def _merge(canonical: Event, other: Event) -> None:
@@ -150,7 +154,7 @@ def _fold_run(run: list[Event]) -> Event:
             _merge_source(base, e)
             if e.raw.get("remote"):
                 base.raw["remote"] = True
-            if not base.raw.get("watch_url") and e.raw.get("watch_url"):
+            if not _http_url(base.raw.get("watch_url")) and _http_url(e.raw.get("watch_url")):
                 base.raw["watch_url"] = e.raw["watch_url"]
     return base
 

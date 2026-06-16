@@ -84,3 +84,50 @@ def test_detect_relative_link_resolved():
     html = '<main><p>Watch online <a href="/live">stream</a></p></main>'
     found, url = detect_remote(html, base_url="https://csis.org/event/1")
     assert found is True and url == "https://csis.org/live"
+
+
+# --- Codex stress-test regression cases ---
+
+def test_detect_strong_host_privacy_link_not_flagged():
+    # a footer/sponsor "powered by Zoom" privacy link must NOT flag the event
+    html = '<main><article><h1>In-person AI talk</h1><p>Sponsored by ' \
+           '<a href="https://zoom.us/privacy">Zoom</a></p></article></main>'
+    assert detect_remote(html) == (False, "")
+
+
+def test_detect_skips_related_events_block():
+    html = ('<main><section class="related"><p>Watch live '
+            '<a href="https://zoom.us/j/9">Other event</a></p></section>'
+            '<article><h1>This event</h1><p>In-person in DC.</p></article></main>')
+    assert detect_remote(html) == (False, "")
+
+
+def test_detect_prefers_video_host_over_press_kit():
+    html = ('<main><p>Watch live on YouTube. '
+            '<a href="https://example.org/press-kit">Press kit</a> '
+            '<a href="https://youtube.com/watch?v=abc">Video</a></p></main>')
+    found, url = detect_remote(html)
+    assert found is True and "youtube.com/watch" in url
+
+
+def test_detect_webex_event_host():
+    html = '<main><p>Register <a href="https://events.webex.com/event/abc">RSVP</a></p></main>'
+    assert detect_remote(html)[0] is True
+
+
+def test_safe_watch_url_non_string_is_empty():
+    ev = Event(id="x", title="t", start="2026-07-01", source="csis",
+               raw={"remote": True, "watch_url": ["https://zoom.us/j/1"]})
+    assert safe_watch_url(ev) == ""
+
+
+def test_detect_strong_link_in_layout_sidebar_content():
+    # CSET-style: the register CTA lives in a layout "sidebar" content div, which
+    # is the event body, NOT chrome. Must still flag (regression for an over-broad
+    # exclusion that dropped real watch links).
+    html = ('<main class="main"><div class="l-sidebar"><div class="l-sidebar__main post-content">'
+            '<h1>Workforce</h1>'
+            '<a href="https://georgetown.zoom.us/webinar/register/WN_x">Register</a>'
+            '</div></div></main>')
+    found, url = detect_remote(html)
+    assert found is True and "georgetown.zoom.us" in url
