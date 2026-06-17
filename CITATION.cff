@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+title: "DC AI & Frontier Tech Events Aggregator"
+abstract: >-
+  A multi-source aggregator that pulls AI, semiconductor, and frontier-tech
+  events in the Washington, DC metro into a single deduplicated,
+  relevance-ranked feed, emitting standard iCalendar, RSS, and JSON outputs.
+authors:
+  - family-names: Aslanoglu
+    given-names: Sidar
+repository-code: "https://github.com/kayadibi1/dc-frontier-events-aggregator"
+url: "https://events.emersus.ai"
+license: MIT
+date-released: 2026-06-16
+keywords:
+  - artificial intelligence
+  - AI policy
+  - semiconductor
+  - tech policy
+  - Washington DC
+  - events
+  - web scraping
+  - icalendar

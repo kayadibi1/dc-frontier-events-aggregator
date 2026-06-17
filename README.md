@@ -10,6 +10,13 @@ cross-posted events, ranks what is worth attending, and emits standard calendar 
 
 Live calendar built from this engine: **https://events.emersus.ai**
 
+Subscribe or pull the data directly:
+
+- **iCalendar** (Google / Apple / Outlook): `https://events.emersus.ai/events.ics`
+- **JSON**: `https://events.emersus.ai/events.json`
+- **RSS**: `https://events.emersus.ai/feed.xml`
+- **This week** (human view): `https://events.emersus.ai/this-week.html`
+
 ## Sources (three layers)
 
 | Layer | What | Examples |
